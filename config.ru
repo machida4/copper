@@ -1,6 +1,6 @@
 require 'bundler'
 Bundler.require
 
-require './app/app'
+require './app'
 
-run App.new
+run Copper.new

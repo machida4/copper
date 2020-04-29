@@ -1,5 +1,4 @@
 require "pathname"
-require "pry"
 
 module Routing
   class Reader
@@ -21,8 +20,7 @@ module Routing
     private
 
     def map_method(method, path, hash)
-      routes.merge!({path => {method => {controller: hash[:to][:controller], action: hash[:to][:action]}}})
+      routes.merge!({path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action]}}})
     end
-
   end
 end
