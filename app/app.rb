@@ -1,5 +1,9 @@
+require 'rack'
+
 class App
   def call(env)
-    [200, {}, ['Hello World']]
+    req = ::Rack::Request.new(env)
+    res = ::Router.process(req)
+    res.finish
   end
 end
