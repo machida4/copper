@@ -11,7 +11,8 @@ module Routing
     def process
       handle_error do
         if target_route = routes.dig(path, method)
-          kontroller(target_route[:controller]).new.call(target_route[:action])
+          ctr = kontroller(target_route[:controller], target_route[:action])
+          ctr.call(target_route[:action])
         else
           Controller.new.not_found
         end
@@ -39,8 +40,9 @@ module Routing
       @req.request_method.to_sym
     end
 
-    def kontroller(kontroller_name)
+    def kontroller(kontroller_name, action_name)
       klass = Object.const_get "#{kontroller_name.capitalize}Controller"
+      klass.new(name: kontroller_name, action: action_name)
     end
   end
 end

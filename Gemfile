@@ -8,3 +8,4 @@ gem 'pry-byebug'
 
 gem 'rack'
 gem 'puma'
+gem 'haml'
