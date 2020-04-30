@@ -1,5 +1,6 @@
 require 'rack'
 require 'pathname'
+
 Pathname(__dir__).glob('lib/**/*.rb').each(&method(:require))
 Pathname(__dir__).glob('app/**/*.rb').each(&method(:require))
 
@@ -10,12 +11,13 @@ class Copper
 
   def call(env)
     req = ::Rack::Request.new(env)
-    controller = ::Routing::Router.new.process(req)
-    res = ::Rack::Response.new { |r|
-      r.status = controller.status
+    ctr = ::Routing::Router.new(req).process
+    res = ::Rack::Response.new do |r|
+      r.status = ctr.status
       r['Content-Type'] = 'text/html;charset=utf-8'
-      r.write controller.body
-    }
+      r.write(ctr.body)
+    end
+
     res.finish
   end
 end

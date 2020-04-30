@@ -16,13 +16,13 @@ class Controller
 
   def not_found
     self.status = 404
-    self.body = "Nothing found"
+    self.body = "404 Not Found"
     self
   end
 
   def internal_error
     self.status = 500
-    self.body = "Internal error"
+    self.body = "500 Internal Server Error"
     self
   end
 end

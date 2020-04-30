@@ -1,24 +1,28 @@
 module Routing
   class Router
-    def routes_path
-      Copper.root.join('config', 'routes.rb')
+    def initialize(req)
+      @req = req
     end
 
     def routes
-      @routes ||= Reader.new(routes_path.read).routes
+      @routes ||= Reader.new.routes
     end
 
-    def process(req)
-      path = req.path_info
-      method = req.request_method.to_sym
-
-      begin
-        if routes.has_key?(path) && routes[path].has_key?(method)
-          route = routes[path][method]
-          kontroller(route).new.call(route[:action])
+    def process
+      handle_error do
+        if target_route = routes.dig(path, method)
+          kontroller(target_route[:controller]).new.call(target_route[:action])
         else
           Controller.new.not_found
         end
+      end
+    end
+
+    private
+
+    def handle_error(&block)
+      begin
+        yield
       rescue Exception => err
         puts err.message
         puts err.backtrace
@@ -27,8 +31,15 @@ module Routing
       end
     end
 
-    def kontroller(route)
-      kontroller_name = route[:controller]
+    def path
+      @req.path
+    end
+
+    def method
+      @req.request_method.to_sym
+    end
+
+    def kontroller(kontroller_name)
       klass = Object.const_get "#{kontroller_name.capitalize}Controller"
     end
   end
