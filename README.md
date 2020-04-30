@@ -1,10 +1,19 @@
 # Copper
+
 Ruby製オレオレWebフレームワーク
 
-### how to use
+## Usage
 
 gemインストール
-```bundle install```
+
+ - ```bundle install```
 
 起動
-```bundle exec rackup -s puma```
+
+ - ```bundle exec rackup -s puma```
+ 
+## つかってるもの
+
+ - Rack
+ - Puma
+ - Haml
