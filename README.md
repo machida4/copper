@@ -1,10 +1,10 @@
 # Copper
 Ruby製オレオレWebフレームワーク
 
-## how to use
+### how to use
 
 gemインストール
-`bundle install`
+```bundle install```
 
 起動
-`bundle exec rackup -s puma`
+```bundle exec rackup -s puma```
