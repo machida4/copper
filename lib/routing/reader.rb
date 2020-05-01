@@ -1,8 +1,10 @@
-require "pathname"
+# frozen_string_literal: true
+
+require 'pathname'
 
 module Routing
   class Reader
-    ALLOWED_METHODS = [:get, :post, :put, :delete]
+    ALLOWED_METHODS = %i[get post put delete].freeze
 
     attr_reader :routes
 
@@ -28,7 +30,8 @@ module Routing
     end
 
     def map_method(method, path, hash)
-      routes.merge!({path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action]}}})
+      routes.merge!({ path => { method.upcase =>
+        { controller: hash[:to][:controller], action: hash[:to][:action] } } })
     end
   end
 end

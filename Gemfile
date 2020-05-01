@@ -1,11 +1,16 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
+git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 
-gem 'pry-byebug'
+# TODO: group :development にする
+gem 'pry-byebug', require: false
+gem 'rubocop', require: false
 
-gem 'rack'
-gem 'puma'
 gem 'haml'
+gem 'puma'
+gem 'rack'
+
+gem 'rom'
+gem 'rom-sql'

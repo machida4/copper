@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 class TopController < Controller
   def index
-    @hello = "Hello, World!!!!!!"
+    @hello = 'Hello, World!!!!!!'
   end
 end

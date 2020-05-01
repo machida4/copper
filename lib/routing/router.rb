@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Routing
   class Router
     def initialize(req)
@@ -10,7 +12,7 @@ module Routing
 
     def process
       handle_error do
-        if target_route = routes.dig(path, method)
+        if (target_route = routes.dig(path, method))
           ctr = kontroller(target_route[:controller], target_route[:action])
           ctr.call(target_route[:action])
         else
@@ -21,15 +23,13 @@ module Routing
 
     private
 
-    def handle_error(&block)
-      begin
-        yield
-      rescue Exception => err
-        puts err.message
-        puts err.backtrace
+    def handle_error(&_block)
+      yield
+    rescue StandardError => e
+      puts e.message
+      puts e.backtrace
 
-        Controller.new.internal_error
-      end
+      Controller.new.internal_error
     end
 
     def path
