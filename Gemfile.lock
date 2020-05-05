@@ -53,6 +53,7 @@ GEM
       nio4r (~> 2.0)
     rack (2.2.2)
     rainbow (3.0.0)
+    rake (13.0.1)
     rexml (3.2.4)
     rom (5.2.2)
       rom-changeset (~> 5.2, >= 5.2.1)
@@ -92,6 +93,7 @@ GEM
       unicode-display_width (>= 1.4.0, < 2.0)
     ruby-progressbar (1.10.1)
     sequel (5.31.0)
+    sqlite3 (1.4.2)
     temple (0.8.2)
     tilt (2.0.10)
     transproc (1.1.1)
@@ -105,9 +107,11 @@ DEPENDENCIES
   pry-byebug
   puma
   rack
+  rake
   rom
   rom-sql
   rubocop
+  sqlite3
 
 BUNDLED WITH
    2.1.4

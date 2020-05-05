@@ -6,14 +6,24 @@ Ruby製オレオレWebフレームワーク
 
 gemインストール
 
- - ```bundle install```
+- ```$ bundle install```
 
 起動
 
- - ```bundle exec rackup -s puma```
- 
+- ```$ bundle exec rackup -s puma```
+
+DBセットアップ
+
+- `config/database.yml`に設定を記述
+
+- `$ bundle exec db:setup`でDBセットアップ
+
+- `$ bundle exec db:create_migration[create_users]`にようにするとmigrationファイルが作成される
+
+- `bundle exec rake db:migrate`でmigrationファイルを適用
+
 ## つかってるもの
 
- - Rack
- - Puma
- - Haml
+- Rack
+- Puma
+- Haml
