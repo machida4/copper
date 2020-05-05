@@ -1,5 +1,7 @@
 module Routing
   class Router
+    attr_reader :req
+
     def initialize(req)
       @req = req
     end
@@ -42,7 +44,7 @@ module Routing
 
     def kontroller(kontroller_name, action_name)
       klass = Object.const_get "#{kontroller_name.capitalize}Controller"
-      klass.new(name: kontroller_name, action: action_name)
+      klass.new(req: req, name: kontroller_name, action: action_name)
     end
   end
 end
