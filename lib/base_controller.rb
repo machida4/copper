@@ -1,4 +1,4 @@
-class Controller
+class BaseController
   attr_reader :req, :name, :action
   attr_accessor :status, :body
 
@@ -15,32 +15,18 @@ class Controller
     self
   end
 
-  # あとで別のクラスに分ける(callもたせる感じにして、見た目もいじれるようにする)
-  def not_found
-    self.status = 404
-    self.body = "404 Not Found"
-    self
-  end
-
-  def internal_error
-    self.status = 500
-    self.body = "500 Internal Server Error"
-    self
-  end
+  private
 
   # あとで別のクラスに分ける
   def template
-    Haml::Engine.new(read_view, :format => :html5)
-  end
-
-  private
-
-  def read_view
-    view_path.read
+    Tilt.new(view_path, :format => :html5)
   end
 
   def view_path
-    Copper.root.join("app", "views", "#{self.name}", "#{self.action}.html.haml")
+    file_paths = Pathname.glob(Copper.root.join("app", "views", "#{self.name}", "#{self.action}.*"))
+    raise TwoViewFileError unless file_paths.one?
+
+    file_paths.first
   end
 
   # TODO: symbolize_keysとか作ってsupportモジュール的なものを用意して隔離したい

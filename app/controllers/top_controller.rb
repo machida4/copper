@@ -1,6 +1,5 @@
-class TopController < Controller
+class TopController < BaseController
   def index
     @hello = "Hello, World!!!!!!"
-    binding.pry
   end
 end

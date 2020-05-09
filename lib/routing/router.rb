@@ -10,14 +10,15 @@ module Routing
       @routes ||= Reader.new.routes
     end
 
+    # callって名前紛らわしくない？
     def process
       handle_error do
-        if target_route = routes.dig(path, method)
-          ctr = kontroller(target_route[:controller], target_route[:action])
-          ctr.call(target_route[:action])
-        else
-          Controller.new.not_found
-        end
+        target_route = routes.dig(path, method)
+
+        return NotFoundController.new.call(:not_found) if target_route.nil?
+
+        ctr = kontroller(req, target_route[:controller], target_route[:action])
+        ctr.call(target_route[:action])
       end
     end
 
@@ -30,7 +31,7 @@ module Routing
         puts err.message
         puts err.backtrace
 
-        Controller.new.internal_error
+        InternalErrorController.new.call(:internal_error)
       end
     end
 
@@ -42,7 +43,7 @@ module Routing
       @req.request_method.to_sym
     end
 
-    def kontroller(kontroller_name, action_name)
+    def kontroller(req, kontroller_name, action_name)
       klass = Object.const_get "#{kontroller_name.capitalize}Controller"
       klass.new(req: req, name: kontroller_name, action: action_name)
     end
