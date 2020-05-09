@@ -7,5 +7,6 @@ git_source(:github) {|repo_name| "https://github.com/#{repo_name}" }
 gem 'pry-byebug'
 
 gem 'rack'
+gem 'rack-protection'
 gem 'puma'
 gem 'haml'
