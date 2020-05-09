@@ -1,4 +1,4 @@
-class Controller
+class BaseController
   attr_reader :req, :name, :action
   attr_accessor :status, :body
 
@@ -12,19 +12,6 @@ class Controller
     send(action)
     self.status = 200
     self.body = template.render(self)
-    self
-  end
-
-  # あとで別のクラスに分ける(callもたせる感じにして、見た目もいじれるようにする)
-  def not_found
-    self.status = 404
-    self.body = "404 Not Found"
-    self
-  end
-
-  def internal_error
-    self.status = 500
-    self.body = "500 Internal Server Error"
     self
   end
 
