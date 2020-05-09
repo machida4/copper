@@ -13,12 +13,12 @@ module Routing
     # callって名前紛らわしくない？
     def process
       handle_error do
-        if target_route = routes.dig(path, method)
-          ctr = kontroller(req, target_route[:controller], target_route[:action])
-          ctr.call(target_route[:action])
-        else
-          NotFoundController.new.call(:not_found)
-        end
+        target_route = routes.dig(path, method)
+
+        return NotFoundController.new.call(:not_found) if target_route.nil?
+
+        ctr = kontroller(req, target_route[:controller], target_route[:action])
+        ctr.call(target_route[:action])
       end
     end
 

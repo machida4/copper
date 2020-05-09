@@ -15,19 +15,18 @@ class BaseController
     self
   end
 
-  # あとで別のクラスに分ける
-  def template
-    Haml::Engine.new(read_view, :format => :html5)
-  end
-
   private
 
-  def read_view
-    view_path.read
+  # あとで別のクラスに分ける
+  def template
+    Tilt.new(view_path, :format => :html5)
   end
 
   def view_path
-    Copper.root.join("app", "views", "#{self.name}", "#{self.action}.html.haml")
+    file_paths = Pathname.glob(Copper.root.join("app", "views", "#{self.name}", "#{self.action}.*"))
+    raise TwoViewFileError unless file_paths.one?
+
+    file_paths.first
   end
 
   # TODO: symbolize_keysとか作ってsupportモジュール的なものを用意して隔離したい

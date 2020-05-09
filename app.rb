@@ -1,5 +1,4 @@
 require 'rack'
-require 'haml'
 require 'pathname'
 
 Pathname(__dir__).glob('lib/**/*.rb').each(&method(:require))

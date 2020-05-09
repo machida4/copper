@@ -16,4 +16,4 @@ gemインストール
 
  - Rack
  - Puma
- - Haml
+ - Tilt
