@@ -10,30 +10,13 @@ module Routing
       @routes ||= Reader.new.routes
     end
 
-    # callって名前紛らわしくない？
-    def process
-      handle_error do
-        target_route = routes.dig(path, method)
+    def processed_controller
+      con = raw_controller
 
-        return NotFoundController.new.call(:not_found) if target_route.nil?
-
-        ctr = kontroller(req, target_route[:controller], target_route[:action])
-        ctr.call(target_route[:action])
-      end
+      con.call(con.action)
     end
 
     private
-
-    def handle_error(&block)
-      begin
-        yield
-      rescue Exception => err
-        puts err.message
-        puts err.backtrace
-
-        InternalErrorController.new.call(:internal_error)
-      end
-    end
 
     def path
       @req.path
@@ -43,9 +26,41 @@ module Routing
       @req.request_method.to_sym
     end
 
-    def kontroller(req, kontroller_name, action_name)
-      klass = Object.const_get "#{kontroller_name.capitalize}Controller"
-      klass.new(req: req, name: kontroller_name, action: action_name)
+    def target_route_map
+      routes.dig(path, method) || nil
+    end
+
+    def raw_controller
+      if target_route_map.nil?
+        NotFoundController.new(
+          req: req,
+          name: "not_found",
+          action: "not_found",
+        )
+      else
+        get_controller_name(target_route_map[:controller]).new(
+          req: req,
+          name: target_route_map[:controller],
+          action: target_route_map[:action],
+        )
+      end
+    rescue Exception => err
+      log_errors(err)
+
+      InternalErrorController.new(
+        req: req,
+        name: "internal_error",
+        action: "internal_error",
+      )
+    end
+
+    def get_controller_name(kontroller_name)
+      Object.const_get "#{kontroller_name.capitalize}Controller"
+    end
+
+    def log_errors(err)
+      puts err.message
+      puts err.backtrace
     end
   end
 end
