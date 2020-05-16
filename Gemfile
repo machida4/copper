@@ -12,6 +12,10 @@ gem 'rack'
 gem 'rack-protection'
 gem 'puma'
 
+# モデル部分
+gem 'sequel'
+gem 'sqlite3'
+
 # テンプレートエンジン
 gem 'tilt'
 gem 'haml'
