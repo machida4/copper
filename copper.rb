@@ -10,14 +10,8 @@ class Copper
   end
 
   def call(env)
-    req = ::Rack::Request.new(env)
-    ctr = ::Routing::Router.new(req).process
-    res = ::Rack::Response.new do |r|
-      r.status = ctr.status
-      r['Content-Type'] = 'text/html;charset=utf-8'
-      r.write(ctr.body)
-    end
-
+    req = ::Request.new(env)
+    res = ::Processing::Processor.new(req).process
     res.finish
   end
 end
