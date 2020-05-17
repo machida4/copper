@@ -1,5 +1,6 @@
 class TopController < BaseController
   def index
-    @hello = "Hello, World!!!!!!"
+    binding.pry
+    @users = User.all
   end
 end

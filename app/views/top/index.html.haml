@@ -1,1 +1,8 @@
-%p= @hello
+- @users.each do |user|
+  %h2
+    = user.id
+  %div
+    = user.name
+  %div
+    = user.group
+  %hr

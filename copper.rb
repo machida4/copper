@@ -1,7 +1,7 @@
-require 'rack'
 require 'pathname'
 require 'yaml'
-require 'sequel'
+
+Pathname(__dir__).glob('lib/**/*.rb').each(&method(:require))
 
 # TODO: こんなところに書きとうないけど書かないとNameError出る、どうしたらいいの
 config = YAML.load(Pathname(__dir__).join('config', 'database.yml').read)
@@ -9,7 +9,6 @@ DB = Sequel.connect(config)
 Sequel.extension :migration
 Sequel::Migrator.run(DB, Pathname(__dir__).join('app', 'db', 'migrations'))
 
-Pathname(__dir__).glob('lib/**/*.rb').each(&method(:require))
 Pathname(__dir__).glob('app/**/*.rb').each(&method(:require))
 
 class Copper

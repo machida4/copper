@@ -1,2 +1,2 @@
 adapter: sqlite
-database: ‘./app/db/development.sqlite3’
+database: ./app/db/development.sqlite3
