@@ -1,5 +1,11 @@
-require 'rack'
 require 'pathname'
+require 'yaml'
+
+# TODO: こんなところに書きとうないけど書かないとNameError出る、どうしたらいいの
+config = YAML.load(Pathname(__dir__).join('config', 'database.yml').read)
+DB = Sequel.connect(config)
+Sequel.extension :migration
+Sequel::Migrator.run(DB, Pathname(__dir__).join('app', 'db', 'migrations'))
 
 Pathname(__dir__).glob('lib/**/*.rb').each(&method(:require))
 Pathname(__dir__).glob('app/**/*.rb').each(&method(:require))
@@ -14,4 +20,22 @@ class Copper
     res = ::Processing::Processor.new(req).process
     res.finish
   end
+
+  private
+
+  # def db_setup
+  #   raise NoConfigFileError unless db_config_path.exist?
+
+  #   config = YAML.load(db_config_path.read)
+  #   @database = Sequel.connect(config)
+  #   Sequel.extension :migration
+  # end
+
+  # def db_config_path
+  #   Copper.root.join('app', 'config', 'database.yml')
+  # end
+
+  # def db_migrations_path
+  #   Copper.root.join('app', 'db', 'migrations')
+  # end
 end

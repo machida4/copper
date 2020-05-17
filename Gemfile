@@ -11,6 +11,11 @@ gem 'pry-byebug'
 gem 'rack'
 gem 'rack-protection'
 gem 'puma'
+gem 'rake'
+
+# モデル部分
+gem 'sequel'
+gem 'sqlite3'
 
 # テンプレートエンジン
 gem 'tilt'

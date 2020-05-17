@@ -19,6 +19,9 @@ GEM
     rack (2.2.2)
     rack-protection (2.0.8.1)
       rack
+    rake (13.0.1)
+    sequel (5.32.0)
+    sqlite3 (1.4.2)
     temple (0.8.2)
     tilt (2.0.10)
 
@@ -31,6 +34,9 @@ DEPENDENCIES
   puma
   rack
   rack-protection
+  rake
+  sequel
+  sqlite3
   tilt
 
 BUNDLED WITH

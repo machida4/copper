@@ -1,5 +1,5 @@
 class TopController < BaseController
   def index
-    @hello = "Hello, World!!!!!!"
+    @users = User.all
   end
 end
