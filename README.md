@@ -18,3 +18,7 @@ gemインストール
  - Puma
  - Tilt
  - Sequel
+ 
+ ## つけた・つけたい機能
+ 
+ https://github.com/machida4/copper/issues/2
