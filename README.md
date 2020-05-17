@@ -17,3 +17,4 @@ gemインストール
  - Rack
  - Puma
  - Tilt
+ - Sequel
