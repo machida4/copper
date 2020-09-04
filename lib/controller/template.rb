@@ -1,6 +1,6 @@
 module Controller
   class Template
-    attr_reader :req, :name, :action
+    attr_reader :req, :name, :action, :location
     attr_accessor :status, :body
 
     def initialize(req: nil, name: nil, action: nil)
@@ -11,12 +11,17 @@ module Controller
 
     def call(action)
       send(action)
-      self.status = 200
+      self.status ||= 200
       self.body = template.render(self)
       self
     end
 
     private
+
+    def redirect_to(loc)
+      @location = loc
+      self.status = 301
+    end
 
     # あとで別のクラスに分ける
     def template

@@ -15,6 +15,7 @@ module Processing
         r.status = con.status
         r.write(con.body)
         r.content_type = CONTENT_TYPE
+        r.location = con.location unless con.location.nil?
       end
     end
   end
