@@ -3,9 +3,10 @@ class TopController < Controller::Template
     @users = User.all
   end
 
-  def post
+  def create
     return false if params[:name].nil? || params[:group].nil?
 
     User.insert(name: params[:name], group: params[:group])
+    redirect(to: "/top")
   end
 end
