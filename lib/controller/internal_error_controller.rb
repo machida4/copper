@@ -1,3 +1,5 @@
+require_relative "template.rb"
+
 class InternalErrorController < Controller::Template
   def call(action)
     # send(action)

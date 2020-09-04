@@ -1,3 +1,5 @@
+require_relative "template.rb"
+
 class NotFoundController < Controller::Template
   def call(action)
     # send(action)
