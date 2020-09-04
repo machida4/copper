@@ -1,4 +1,4 @@
-class NotFoundController < BaseController
+class NotFoundController < Controller::Template
   def call(action)
     # send(action)
     self.status = 404

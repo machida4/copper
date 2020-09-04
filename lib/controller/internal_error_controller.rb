@@ -1,4 +1,4 @@
-class InternalErrorController < BaseController
+class InternalErrorController < Controller::Template
   def call(action)
     # send(action)
     self.status = 500
