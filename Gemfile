@@ -10,7 +10,7 @@ gem 'pry-byebug'
 # コア部分
 gem 'rack'
 gem 'rack-protection'
-gem 'puma'
+gem 'puma', ">= 4.3.5"
 gem 'rake'
 
 # モデル部分
