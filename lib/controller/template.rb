@@ -4,9 +4,7 @@ module Controller
     attr_accessor :status, :body, :location
 
     def initialize(req: nil, name: nil, action: nil)
-      @req = req
-      @name = name
-      @action = action
+      @req, @name, @action = req, name, action
     end
 
     def call(action: self.action)
