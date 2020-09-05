@@ -7,7 +7,7 @@ class UserController < Controller::Template
     return false if params[:name].nil? || params[:group].nil?
 
     User.insert(name: params[:name], group: params[:group])
-    redirect(to: "/top")
+    redirect(to: "/users")
   end
 
   def show

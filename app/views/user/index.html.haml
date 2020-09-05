@@ -7,9 +7,10 @@
     = user.group
   %a{href: "/users/#{user.id}"}
     詳細を見る
+  %a{href: "/users/#{user.id}", method: "delete"}
   %hr
 
-%form{action: "/post", method: "post"}
+%form{action: "/users", method: "post"}
   %p
     Name:
     %input{name: "name", size: "40", type: "text"}

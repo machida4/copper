@@ -1,5 +1,14 @@
 require "pathname"
 
+# ネストされたハッシュを破壊的にマージする
+# TODO: あとで隔離
+class ::Hash
+  def deep_merge!(second)
+    merger = proc { |key, v1, v2| Hash === v1 && Hash === v2 ? v1.merge(v2, &merger) : Array === v1 && Array === v2 ? v1 | v2 : [:undefined, nil, :nil].include?(v2) ? v1 : v2 }
+    self.merge!(second.to_h, &merger)
+  end
+end
+
 module Routing
   class Reader
     ALLOWED_METHODS = [:get, :post, :put, :delete]
@@ -31,7 +40,7 @@ module Routing
       # compiled_path は Regexp, match_syms は urlマッチングする部分のシンボルが入った配列
       compiled_path, match_syms = compile_path(path)
       # TODO: routesが重くなってきたからクラス作ったほうがいいかもしれない
-      routes.merge!({compiled_path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action], match_syms: match_syms}}})
+      routes.deep_merge!({compiled_path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action], match_syms: match_syms}}})
     end
 
     def compile_path(path)
