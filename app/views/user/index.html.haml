@@ -7,7 +7,8 @@
     = user.group
   %a{href: "/users/#{user.id}"}
     詳細を見る
-  %a{href: "/users/#{user.id}", method: "delete"}
+  %form{action: "/users/#{user.id}/delete", method: "post", name: "delete_user#{user.id}"}
+    %a{:href => "javascript:delete_user#{user.id}.submit()"} 削除する
   %hr
 
 %form{action: "/users", method: "post"}
