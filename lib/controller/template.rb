@@ -9,7 +9,7 @@ module Controller
       @action = action
     end
 
-    def call(action)
+    def call(action: self.action)
       send(action)
       self.status ||= 200
       self.body ||= template.render(self)

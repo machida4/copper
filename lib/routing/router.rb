@@ -13,7 +13,7 @@ module Routing
     def processed_controller
       con = raw_controller
 
-      con.call(con.action)
+      con.call()
     end
 
     private
