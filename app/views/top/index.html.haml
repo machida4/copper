@@ -1,19 +1,4 @@
-- @users.each do |user|
-  %h2
-    = user.id
-  %div
-    = user.name
-  %div
-    = user.group
-  %hr
-
-%form{action: "/post", method: "post"}
-  %p
-    Name:
-    %input{name: "name", size: "40", type: "text"}
-  %p
-    Group:
-    %input{name: "group", size: "40", type: "text"}
-  %p
-    %input{type: "submit", value: "submit"}
-    %input{type: "reset", value: "reset"}
+%h1
+  Welcome!
+%a{href: "/users"}
+  ユーザー一覧

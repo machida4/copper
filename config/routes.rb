@@ -1,5 +1,9 @@
 # example:
 # get "top", to: {controller: "top", action: "index"}
 
-get "/top", to: {controller: "top", action: "index"}
-post "/post", to: {controller: "top", action: "create"}
+# top
+get "/", to: {controller: "top", action: "index"}
+
+# user
+get "/users", to: {controller: "user", action: "index"}
+post "/users/create", to: {controller: "user", action: "create"}
