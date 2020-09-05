@@ -9,4 +9,9 @@ class UserController < Controller::Template
     User.insert(name: params[:name], group: params[:group])
     redirect(to: "/top")
   end
+
+  def show
+    id = match_params[:id]
+    @user = User.first(id: id)
+  end
 end

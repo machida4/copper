@@ -28,7 +28,23 @@ module Routing
     end
 
     def map_method(method, path, hash)
-      routes.merge!({path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action]}}})
+      # compiled_path は Regexp, match_syms は urlマッチングする部分のシンボルが入った配列
+      compiled_path, match_syms = compile_path(path)
+      # TODO: routesが重くなってきたからクラス作ったほうがいいかもしれない
+      routes.merge!({compiled_path => {method.upcase => {controller: hash[:to][:controller], action: hash[:to][:action], match_syms: match_syms}}})
+    end
+
+    def compile_path(path)
+      match_syms = []
+
+      replaced_path = path.gsub(/:\w+/) do |match|
+        match_syms << match.gsub(':', '').to_sym
+        '([^/?#]+)'
+      end
+
+      compiled_path = /^#{replaced_path}$/
+
+      return compiled_path, match_syms
     end
   end
 end

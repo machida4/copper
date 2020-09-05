@@ -5,6 +5,8 @@
     = user.name
   %div
     = user.group
+  %a{href: "/users/#{user.id}"}
+    詳細を見る
   %hr
 
 %form{action: "/post", method: "post"}

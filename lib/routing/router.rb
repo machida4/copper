@@ -1,9 +1,11 @@
 module Routing
   class Router
+    attr_accessor :match_params
     attr_reader :req
 
     def initialize(req)
       @req = req
+      @match_params = Hash.new
     end
 
     def routes
@@ -26,8 +28,29 @@ module Routing
       @req.request_method.to_sym
     end
 
+    # TODO: 名称とクラス等がぐちゃぐちゃなので整理する
     def target_route_map
-      routes.dig(path, method) || nil
+      # マッチするルートのハッシュを返す
+      # TODO: [1]がダサすぎる、なんかないか
+      route = routes.find do |k, value|
+        k =~ path
+      end
+
+      # match_paramsにマッチしたパラメータを詰める
+      # (たとえば /users/:id の :id)
+      # TODO: 場所は再考
+      if route && $~.captures
+        $~.captures.each_with_index do |v, index|
+          match_params[route[1][method][:match_syms][index]] = v
+        end
+      end
+
+      # TODO: ここダサすぎて泣ける
+      if route
+        route[1][method]
+      else
+        nil
+      end
     end
 
     def raw_controller
@@ -36,12 +59,14 @@ module Routing
           req: req,
           name: "not_found",
           action: "not_found",
+          match_params: match_params,
         )
       else
         get_controller_name(target_route_map[:controller]).new(
           req: req,
           name: target_route_map[:controller],
           action: target_route_map[:action],
+          match_params: match_params,
         )
       end
     rescue Exception => err
@@ -51,6 +76,7 @@ module Routing
         req: req,
         name: "internal_error",
         action: "internal_error",
+        match_params: match_params,
       )
     end
 

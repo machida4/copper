@@ -1,10 +1,10 @@
 module Controller
   class Template
-    attr_reader :req, :name, :action
+    attr_reader :req, :name, :action, :match_params
     attr_accessor :status, :body, :location
 
-    def initialize(req: nil, name: nil, action: nil)
-      @req, @name, @action = req, name, action
+    def initialize(req: nil, name: nil, action: nil, match_params: {})
+      @req, @name, @action, @match_params = req, name, action, match_params
     end
 
     def call(action: self.action)
